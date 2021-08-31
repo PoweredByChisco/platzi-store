@@ -4,6 +4,7 @@ import {
   mount,
   shallow,
 } from 'enzyme'; /* shallow permite traer elementos y probarlos como una unidad, ya que solo se necesita algo particular del componente y no toda la estructura y sus elementos del DOM*/
+import { create } from 'react-test-renderer';
 import ProviderMock from '../../__mocks__/ProviderMock';
 import Header from '../../components/Header';
 
@@ -23,5 +24,16 @@ describe('<Header />', () => {
       </ProviderMock>
     );
     expect(header.find('.Header-title').text()).toEqual('Platzi Store');
+  });
+});
+
+describe('Header Snapshot', () => {
+  test('Comprobe header snapshot', () => {
+    const header = create(
+      <ProviderMock>
+        <Header />
+      </ProviderMock>
+    );
+    expect(header.toJSON()).toMatchSnapshot();
   });
 });
